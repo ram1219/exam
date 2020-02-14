@@ -72,6 +72,11 @@ int main(void)
             show_all_cards(bc_data);
         break;
         case SEARCH: {
+            if (cardnumber == 0) {
+                printf("검색할 정보가 없습니다.\n");
+                break;
+            }
+
             printf("검색할 명함번호를 입력하세요 : ");
             scanf("%d", &num);
 
@@ -101,9 +106,9 @@ void input_business_card(char* i_name, char* i_number, char* i_email) {
 
     cardnumber++;
 
-    (bc_data + cardnumber)->name = i_name;
-    (bc_data + cardnumber)->number = i_number;
-    (bc_data + cardnumber)->email = i_email;
+    bc_data[cardnumber].name = i_name;
+    bc_data[cardnumber].number = i_number;
+    bc_data[cardnumber].email = i_email;
 
 }
 
@@ -112,12 +117,12 @@ void edit_business_card(int num) {
     char* e_num = 0;
     char* e_email = 0;
     printf("수정할 전화번호 입력 : ");
-    fgets(&e_num,20,stdin);
+    gets(&e_num);
     printf("수정할 이메일 입력 : ");
-    fgets(&e_email,50,stdin);
+    gets(&e_email);
 
-    (bc_data + num)->number = e_num;
-    (bc_data + num)->email = e_email;
+    bc_data[num].number = e_num;
+    bc_data[num].email = e_email;
 }
 
 void show_all_cards(s_data *show_data) {
@@ -135,8 +140,8 @@ void show_all_cards(s_data *show_data) {
 
 void search_business_card(int num) {
 
-    if (cardnumber == 0) {
-        printf("검색할 정보가 없습니다.\n");
+    if (num > cardnumber || num < 0) {
+        printf("정보가 없습니다.\n");
         return;
     }
 
